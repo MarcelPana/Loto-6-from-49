@@ -26,31 +26,26 @@ public class Loto6From49 {
 
 // Get the user's numbers
         int count = 0;
-        System.out.println();
-        System.out.print("Choose your's 6 numbers, please!");
-        do {
-            guess = sc.nextInt();
-            validInput = true;
-            if ((guess < 1) || (guess > 49)) {
+        int[] chosenNumbers = new int[6];
+        for (int i = 0; i < chosenNumbers.length ; i++) {
+        System.out.print("Choose yours 6 numbers, please!");
+            int number = sc.nextInt();
+            System.out.println("You have chosen number " + number);
+            if ((number < 1) || (number > 49)) {
                 System.out.print("Between 1 " + "and 10, please! Try again: ");
-            } else
-                count++;
-        } while (count <= 6);
-
-// Pick 6 random numbers
-        while (counter <= 6) {
-            numbers = (int) (Math.random() * 49) + 1;
-            counter++;
-            if (counter < 7) {
-                System.out.print(numbers + ";");
-            }
+            }else chosenNumbers[i] = number;
         }
+        System.out.println("Your 6 chosen numbers are: " + Arrays.toString(chosenNumbers));
+
+// The lucky 6 random numbers
+        int[] winningNumbers = new int[6];
+        for (int i = 0; i < winningNumbers.length; i++) {
+            int number = (int) (Math.random() * 49) + 1;
+            winningNumbers[i] = number;
+        }
+        System.out.println("The lucky numbers are: " + Arrays.toString(winningNumbers) );
 // Check the guess
 
-        if (guess == numbers)
-            System.out.println("You're right!");
-        else
-            System.out.println("You're wrong! " + "The number was " + numbers);
 // Play again?
         do {
             System.out.print("\nPlay again? (Y or N)");
