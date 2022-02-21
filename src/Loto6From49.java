@@ -9,7 +9,7 @@ public class Loto6From49 {
 
 
     public static void main(String[] args) {
-        System.out.println("Let's play a guessing game!");
+        System.out.println("Let's play!");
         while (keepPlaying) {
             playARound();
         }
@@ -25,17 +25,29 @@ public class Loto6From49 {
 
 
 // Get the user's numbers
-        int count = 0;
+
         int[] chosenNumbers = new int[6];
-        for (int i = 0; i < chosenNumbers.length ; i++) {
-        System.out.print("Choose yours 6 numbers, please!");
-            int number = sc.nextInt();
-            System.out.println("You have chosen number " + number);
-            if ((number < 1) || (number > 49)) {
-                System.out.print("Between 1 " + "and 10, please! Try again: ");
-            }else chosenNumbers[i] = number;
+        for (int i = 0; i < chosenNumbers.length; i++) {
+            System.out.print("Choose yours 6 numbers, please!");
+            int valid = 0;
+            do {
+                try {
+                    valid = 0;
+                    int number = sc.nextInt();
+                    // System.out.println("You have chosen number " + number);
+                    if ((number < 1) || (number > 49)) {
+                        i--;
+                        System.out.print("Between 1 " + "and 10, please! Try again: ");
+                    } else chosenNumbers[i] = number;
+                } catch (Exception e) {
+                    System.out.println("Ce ai facut");
+                    valid++;
+                    i--;
+                }
+            } while (valid > 0);
+            System.out.println("Your 6 chosen numbers are: " + Arrays.toString(chosenNumbers));
+
         }
-        System.out.println("Your 6 chosen numbers are: " + Arrays.toString(chosenNumbers));
 
 // The lucky 6 random numbers
         int[] winningNumbers = new int[6];
@@ -43,7 +55,7 @@ public class Loto6From49 {
             int number = (int) (Math.random() * 49) + 1;
             winningNumbers[i] = number;
         }
-        System.out.println("The lucky numbers are: " + Arrays.toString(winningNumbers) );
+        System.out.println("The lucky numbers are: " + Arrays.toString(winningNumbers));
 // Check the guess
 
 // Play again?
