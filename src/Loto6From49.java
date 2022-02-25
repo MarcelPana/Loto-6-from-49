@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Loto6From49 {
+public class Loto6From49 extends Thread {
 
     static Scanner sc = new Scanner(System.in);
     static boolean keepPlaying = true;
-
+    static Thread delay = new Thread();
 
     public static void main(String[] args) {
         System.out.println("Let's play!");
@@ -27,33 +27,38 @@ public class Loto6From49 {
 // Get the user's numbers
 
         int[] chosenNumbers = new int[6];
-        for (int i = 0; i < chosenNumbers.length; i++) {
-            System.out.print("Choose yours 6 numbers, please!");
-            int valid = 0;
-            do {
-                try {
-                    valid = 0;
-                    int number = sc.nextInt();
-                    // System.out.println("You have chosen number " + number);
-                    if ((number < 1) || (number > 49)) {
-                        i--;
-                        System.out.print("Between 1 " + "and 10, please! Try again: ");
-                    } else chosenNumbers[i] = number;
-                } catch (Exception e) {
-                    System.out.println("Ce ai facut");
-                    valid++;
-                    i--;
-                }
-            } while (valid > 0);
-            System.out.println("Your 6 chosen numbers are: " + Arrays.toString(chosenNumbers));
+        int valid = 0;
+        do {
 
-        }
+            for (int i = 0; i < chosenNumbers.length; i++) {
+                System.out.print("Choose yours 6 numbers, please!");
+                valid = i;
+                int number = sc.nextInt();
+                // System.out.println("You have chosen number " + number);
+                if ((number < 1) || (number > 49)) {
+                    i--;
+                    System.out.print("Between 1 " + "and 10, please! Try again: ");
+                } else chosenNumbers[i] = number;
+
+                System.out.println("Your 6 chosen numbers are: " + Arrays.toString(chosenNumbers));
+            }
+        } while (valid < 5);
+
 
 // The lucky 6 random numbers
+        System.out.println("And now, let's see the lucky numbers");
         int[] winningNumbers = new int[6];
+
         for (int i = 0; i < winningNumbers.length; i++) {
+            int index = i + 1;
             int number = (int) (Math.random() * 49) + 1;
             winningNumbers[i] = number;
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+
+            }
+            System.out.println("The " + index + " lucky number is: " + winningNumbers[i]);
         }
         System.out.println("The lucky numbers are: " + Arrays.toString(winningNumbers));
 // Check the guess
