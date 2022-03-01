@@ -1,10 +1,11 @@
 import java.util.*;
 import java.util.function.Predicate;
 
-public  class Lotto6From49 extends Thread {
+public class Lotto6From49 extends Thread {
 
     static Scanner sc = new Scanner(System.in);
     static boolean keepPlaying = true;
+    static int chosenNumber;
 
     public static void main(String[] args) {
         System.out.println("Let's play!");
@@ -18,48 +19,59 @@ public  class Lotto6From49 extends Thread {
         boolean validInput;
         String answer;
 // Get the user's numbers
-        int[] chosenNumbers = new int[6];
-        int valid = 0;
+        System.out.println("Choose a number please!");
+        ArrayList<Integer> userNumbers = new ArrayList<>(6);
         do {
-            for (int i = 0; i < chosenNumbers.length; i++) {
-                System.out.print("Choose yours 6 numbers, please!");
-                valid = i;
-                int number = sc.nextInt();
-                // System.out.println("You have chosen number " + number);
-                if ((number < 1) || (number > 49)) {
-                    i--;
+
+            try {
+                chosenNumber = sc.nextInt();
+                chosenNumber = (int) (Math.random() * 49) + 1;
+                if ((chosenNumber < 1) || (chosenNumber > 49)) {
                     System.out.print("Between 1 " + "and 49, please! Try again: ");
-                 for (int j = 0; j < chosenNumbers.length; j++) {
-                        if( number == chosenNumbers[j]){
-                            System.out.println("aoleu ce ai facut");
-                        }
-                    }
-                } else chosenNumbers [i] = number;
-
-                System.out.println("Your 6 chosen numbers are: " + Arrays.toString(chosenNumbers));
+                } else if (!userNumbers.contains(chosenNumber)) {
+                    userNumbers.add(chosenNumber);
+                    System.out.println("Your chosen numbers are: " + userNumbers);
+                }
+            } catch (Exception e) {
+                sc.next();
+                System.out.println("Just numbers please!");
             }
-        } while (valid < 5);
-
-
+        } while (userNumbers.size() < 6);
+        System.out.println();
+        System.out.println();
 // The lucky 6 random numbers
         System.out.println("And now, let's see the lucky numbers");
+        ArrayList<Integer> luckyNumbers = new ArrayList<>(6);
+        do {
 
-         ArrayList<Integer> luckyNumbers = new ArrayList<>(6);
+            int number = (int) (Math.random() * 49) + 1;
+            if (!luckyNumbers.contains(number))
+                luckyNumbers.add(number);
+            try {
+                 Thread.sleep(5000);
+            } catch (InterruptedException e) {
 
-            do {
+             }
+            System.out.println("The lucky numbers are: " + luckyNumbers);
+        } while (luckyNumbers.size() < 6);
 
-                int number = (int) (Math.random() * 49) + 1;
-                if (!luckyNumbers.contains(number))
-                    luckyNumbers.add(number);
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
+// Check the numbers
 
+        System.out.println();
+        System.out.println();
+        ArrayList<Integer> guessedNumbers = new ArrayList<>();
+        for (int s : userNumbers) {
+            for (int l : luckyNumbers) {
+                if (s == l) {
+                    guessedNumbers.add(s);
                 }
-                System.out.println("The lucky numbers are: " + luckyNumbers);
-            }while (luckyNumbers.size() < 6 );
+            }
 
-// Check the guess
+        }
+        System.out.println("Your chosen numbers are: " + userNumbers);
+        System.out.println("The lucky numbers are:   " + luckyNumbers);
+        System.out.println("The guessed numbers are: " + guessedNumbers);
+        System.out.println("You have shot "+ guessedNumbers.size() + " numbers");
 
 // Play again?
         do {
@@ -74,6 +86,9 @@ public  class Lotto6From49 extends Thread {
         } while (!validInput);
         System.out.println("\nThank you for playing!");
     }
+
 }
+
+
 
 
